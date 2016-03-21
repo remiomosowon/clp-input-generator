@@ -1,0 +1,1 @@
+This folder should contain the loading optimisation program and all the files required to run it (i.e. dlls, GA settings, pallet type settings, etc) as well as the shell script that runs the program and this README file.
