@@ -52,7 +52,7 @@ def rjust3(value):
 
 
 # Write a list of supplied pallets to an input file.
-def create_output_file(pallets, total, capacity, filenum, prefix='input_', output_dir=None):
+def create_output_file(pallets, total, capacity, filenum, prefix='input_', dir=None):
     cap = rjust3(capacity)  # used container capacity (liquid logic)
     fnum = rjust3(filenum)  # file number
     tot = rjust3(total)  # total number of pallets
@@ -60,13 +60,13 @@ def create_output_file(pallets, total, capacity, filenum, prefix='input_', outpu
 
     filename = prefix + "c{}_{}_t{}_{}.txt".format(cap, fnum, tot, ftime)
 
-    if output_dir is not None:
+    if dir is not None:
         # if a directory is specified, add it to the filename
-        filename = output_dir + "/" + filename
+        filename = dir + "/" + filename
 
         # if the directory doesn't exist, create it
-        if not os.path.exists(output_dir):
-            os.mkdir(output_dir)
+        if not os.path.exists(dir):
+            os.mkdir(dir)
 
     with open(filename, 'w') as ofile:
         plt_num = 1
@@ -90,7 +90,7 @@ def main():
     for capacity in capacities:
         for fnum in range(1, num_of_files_per_capacity + 1):
             total, pallets = fill_with_equal_probability(capacity)
-            create_output_file(pallets, total, capacity, fnum, output_dir='equal_chance')
+            create_output_file(pallets, total, capacity, fnum, dir='equal_chance')
 
 
 if __name__ == '__main__':
