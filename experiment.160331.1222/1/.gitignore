@@ -1,3 +1,7 @@
+*.dll
+*.exe
+*.ini
+input*.txt
 2/
 3/
 c60/
@@ -5,6 +9,3 @@ c70/
 c80/
 c90/
 c100/
-pc*/
-*.dll
-*.exe

@@ -15,7 +15,8 @@ import os
 
 PalletType = namedtuple("PalletType", "name length breadth area")
 
-pallet_type_data = [('S', 80, 70), ('N', 105, 78), ('E', 120, 81), ('E2', 80, 60)]
+# the program is currently calibrated to work with type N at 105x75
+pallet_type_data = [('S', 80, 70), ('N', 105, 75), ('E', 120, 81), ('E2', 80, 60)]
 pallet_types = {name: PalletType(name, length, breadth, length * breadth) for (name, length, breadth) in
                 pallet_type_data}
 
@@ -87,10 +88,24 @@ def main():
     capacities = [60, 70, 80, 90, 100]
     num_of_files_per_capacity = 50
 
+    # Generate 2 files for each capacity in 25 separate folders
+    # corresponding to each PC core available for use.
+    # Dump the rest of the generated files in a folder denoting their capacity.
     for capacity in capacities:
-        for fnum in range(1, num_of_files_per_capacity + 1):
-            total, pallets = fill_with_equal_probability(capacity)
-            create_output_file(pallets, total, capacity, fnum, dir='equal_chance')
+        fnum = 0
+        for pcs in range(1,26):
+            for i in range(2):
+                fnum += 1
+                total, pallets = fill_with_equal_probability(capacity)
+                create_output_file(pallets, total, capacity, fnum, dir="pc"+rjust3(pcs))
+
+        filesLeft = num_of_files_per_capacity - fnum
+        if filesLeft > 0: 
+            dirname = "c" + str(capacity)
+            for j in range(filesLeft, num_of_files_per_capacity + 1):
+                fnum += 1
+                total, pallets = fill_with_equal_probability(capacity)
+                create_output_file(pallets, total, capacity, fnum, dir=dirname)
 
 
 if __name__ == '__main__':
